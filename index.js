@@ -20,7 +20,13 @@ const allowedOrigins = [
 const app = express();
 
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Allow all origins
+    methods: "*", // Allow specific methods
+    allowedHeaders: "*", // Allow specific headers
+  },
+});
 
 app.use(
   cors({
