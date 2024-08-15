@@ -12,11 +12,13 @@ const CLIENT_URL = process.env.CLIENT || "http://localhost:3000";
 mongoose.connect(process.env.CONNECTION_STR);
 
 const allowedOrigins = [
+  "*",
   "https://doc-editor-client-n1y1.vercel.app/",
   "http://localhost:3000",
 ];
 
 const app = express();
+
 app.use(
   cors({
     origin: allowedOrigins,
@@ -28,6 +30,10 @@ const io = new Server(server, {
   cors: {
     origin: CLIENT_URL,
   },
+});
+
+app.get("/health", (req, res) => {
+  res.send("Server is running");
 });
 
 io.on("connection", (socket) => {
