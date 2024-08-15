@@ -19,18 +19,10 @@ const allowedOrigins = [
 
 const app = express();
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true, // if you're using cookies or authentication
-  })
-);
 const server = createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: CLIENT_URL,
-  },
-});
+const io = new Server(server);
+
+app.use(cors());
 
 app.get("/health", (req, res) => {
   res.send("Server is running");
