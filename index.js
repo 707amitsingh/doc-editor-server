@@ -13,7 +13,7 @@ mongoose.connect(process.env.CONNECTION_STR);
 
 const allowedOrigins = [
   "*",
-  "https://doc-editor-client-n1y1.vercel.app/",
+  "https://doc-editor-client.vercel.app/",
   "http://localhost:3000",
 ];
 
@@ -25,7 +25,7 @@ const io = new Server(server);
 app.use(
   cors({
     origin: "*", // Allow requests from any origin
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow specific methods
+    methods: "*", // Allow specific methods
     allowedHeaders: "*", // Allow specific headers
   })
 );
