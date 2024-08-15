@@ -26,6 +26,7 @@ const io = new Server(server, {
     methods: "*", // Allow specific methods
     allowedHeaders: "*", // Allow specific headers
   },
+  transports: ["websocket"],
 });
 
 app.use(
