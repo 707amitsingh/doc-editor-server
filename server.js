@@ -2,21 +2,24 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const { findOrCreateDocument, saveDocument } = require("./schemas/utils");
 
-mongoose.connect("");
+const PORT = process.env.PORT || 3001;
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
+
+mongoose.connect(process.env.CONNECTION_STR);
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: CLIENT_URL,
   },
 });
 
 io.on("connection", (socket) => {
   socket.on("get-document", async (documentId) => {
-    console.log(">>>>>>> documentIdRequested: ", documentId);
     const document = await findOrCreateDocument(documentId);
     socket.join(documentId);
     socket.emit("load-document", document.data);
@@ -26,12 +29,11 @@ io.on("connection", (socket) => {
     });
 
     socket.on("save-document", async (data) => {
-      console.log(">>>>>>>>>>> saving changes: ", data);
-      await saveDocument(data);
+      await saveDocument(documentId, data);
     });
   });
 });
 
-server.listen(3001, () => {
-  console.log("server running at http://localhost:3001");
+server.listen(PORT, () => {
+  console.log(`server running on port ${PORT}`);
 });

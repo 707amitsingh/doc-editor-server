@@ -12,7 +12,11 @@ async function findOrCreateDocument(id) {
 }
 
 async function saveDocument(id, data) {
-  const doc = await Document.findOneAndUpdate({ _id: id }, { data });
+  await Document.findOneAndUpdate(
+    { _id: id }, // Query to find the document by id
+    { data, updatedAt: new Date() }, // Update the content and the updatedAt timestamp
+    { upsert: true, new: true } // Create a new document if it doesn't exist, return the updated document
+  );
 }
 
 module.exports = { findOrCreateDocument, saveDocument };
