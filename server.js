@@ -6,7 +6,7 @@ require("dotenv").config();
 const { findOrCreateDocument, saveDocument } = require("./schemas/utils");
 
 const PORT = process.env.PORT || 3001;
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
+const CLIENT_URL = process.env.CLIENT || "http://localhost:3000";
 
 mongoose.connect(process.env.CONNECTION_STR);
 
