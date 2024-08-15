@@ -31,6 +31,10 @@ app.use(
 );
 
 app.get("/health", (req, res) => {
+  res.send("Home");
+});
+
+app.get("/health", (req, res) => {
   res.send("Server is running");
 });
 
