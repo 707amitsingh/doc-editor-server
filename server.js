@@ -22,7 +22,13 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*", // Allow requests from any origin
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow specific methods
+    allowedHeaders: "*", // Allow specific headers
+  })
+);
 
 app.get("/health", (req, res) => {
   res.send("Server is running");
